@@ -3,23 +3,22 @@
 CREATE COMPUTE MODULE LeCSVFull_Compute
 	CREATE FUNCTION Main() RETURNS BOOLEAN
 	BEGIN
-		SET OutputRoot.Properties = InputRoot.Properties;
-		
+		SET OutputRoot.Properties = InputRoot.Properties;		
 		DECLARE ref REFERENCE TO InputRoot.DFDL.Teste.record;
 		
 		WHILE LASTMOVE(ref) DO
 			CREATE LASTCHILD OF OutputRoot.XMLNSC.records NAME 'record';
 			--DECLARE RECORD REFERENCE TO OutputRoot.XMLNSC.records.*[<];
-			SET OutputRoot.XMLNSC.records.*[<].field1 = ref.field1;
-			SET OutputRoot.XMLNSC.records.*[<].field2 = ref.field2;
-			SET OutputRoot.XMLNSC.records.*[<].field3 = ref.field3;
-			SET OutputRoot.XMLNSC.records.*[<].field4 = ref.field4;
-			SET OutputRoot.XMLNSC.records.*[<].field5 = ref.field5;
+			SET OutputRoot.XMLNSC.records.*[<] = SELECT ref.field1 AS field1,
+														ref.field2 AS field2,
+														ref.field3 AS field3,
+														ref.field4 AS field4,
+														ref.field5 AS field5
+											     FROM ref AS ref;
 			MOVE ref NEXTSIBLING REPEAT NAME;
 			DELETE PREVIOUSSIBLING OF ref;
 		END WHILE;
-		
-		
+				
 		RETURN TRUE;
 	END;
 END MODULE;
