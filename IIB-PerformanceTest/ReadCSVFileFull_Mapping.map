@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?><mappingRoot xmlns="http://www.ibm.com/2008/ccl/Mapping" domainID="com.ibm.msl.mapping.xml" domainIDExtension="mb" mainMap="true" targetNamespace="default" version="8.0.4.0" xmlns:map="default">
+    <input path="/Teste.xsd"/>
+    <output path="/XMLSaida/TesteXML.xsd"/>
+    <generation engine="xquery"/>
+    <mappingDeclaration name="ReadCSVFileFull_Mapping">
+        <input path="mb:msg(Teste,assembly,DFDL,Properties)"/>
+        <output path="mb:msg(records,assembly,XMLNSC,Properties)"/>
+        <move>
+            <input path="Properties"/>
+            <output path="Properties"/>
+        </move>
+        <local>
+            <input path="Teste"/>
+            <output path="records"/>
+            <foreach>
+                <input path="record"/>
+                <output path="record"/>
+                <move>
+                    <input path="field1"/>
+                    <output path="field1"/>
+                </move>
+                <move>
+                    <input path="field2"/>
+                    <output path="field2"/>
+                </move>
+                <move>
+                    <input path="field3"/>
+                    <output path="field3"/>
+                </move>
+                <move>
+                    <input path="field4"/>
+                    <output path="field4"/>
+                </move>
+                <move>
+                    <input path="field5"/>
+                    <output path="field5"/>
+                </move>
+            </foreach>
+        </local>
+    </mappingDeclaration>
+</mappingRoot>

@@ -1,0 +1,16 @@
+
+
+CREATE COMPUTE MODULE LeCSVLinhaPorLinha_Compute
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		SET OutputRoot.Properties = InputRoot.Properties;
+		
+		SET OutputRoot.XMLNSC.record.record.field1 = InputRoot.DFDL.Teste.record.field1;
+		SET OutputRoot.XMLNSC.record.record.field2 = InputRoot.DFDL.Teste.record.field2;
+		SET OutputRoot.XMLNSC.record.record.field3 = InputRoot.DFDL.Teste.record.field3;
+		SET OutputRoot.XMLNSC.record.record.field4 = InputRoot.DFDL.Teste.record.field4;
+		SET OutputRoot.XMLNSC.record.record.field5 = InputRoot.DFDL.Teste.record.field5;
+		
+		RETURN TRUE;
+	END;
+END MODULE;
