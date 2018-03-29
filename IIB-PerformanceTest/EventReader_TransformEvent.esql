@@ -1,0 +1,14 @@
+
+
+CREATE COMPUTE MODULE EventReader_TransformEvent
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		SET OutputRoot.Properties = InputRoot.Properties;
+		
+		SET OutputRoot.XMLNSC.Event.name = InputRoot.XMLNSC.*:event.*:eventPointData.*:eventData.*:eventSourceAddress;
+		SET OutputRoot.XMLNSC.Event.time = InputRoot.XMLNSC.*:event.*:eventPointData.*:eventData.*:eventSequence.*:creationTime;
+		SET OutputRoot.XMLNSC.Event.flow = InputRoot.XMLNSC.*:event.*:applicationData.*:simpleContent.*:value;
+		
+		RETURN TRUE;
+	END;
+END MODULE;
