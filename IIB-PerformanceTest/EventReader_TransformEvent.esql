@@ -3,11 +3,21 @@
 CREATE COMPUTE MODULE EventReader_TransformEvent
 	CREATE FUNCTION Main() RETURNS BOOLEAN
 	BEGIN
-		SET OutputRoot.Properties = InputRoot.Properties;
+		SET OutputRoot.Properties = InputRoot.Properties;		
 		
-		SET OutputRoot.XMLNSC.Event.name = InputRoot.XMLNSC.*:event.*:eventPointData.*:eventData.*:eventSourceAddress;
-		SET OutputRoot.XMLNSC.Event.time = InputRoot.XMLNSC.*:event.*:eventPointData.*:eventData.*:eventSequence.*:creationTime;
-		SET OutputRoot.XMLNSC.Event.flow = InputRoot.XMLNSC.*:event.*:applicationData.*:simpleContent.*:value;
+		DECLARE name BLOB CAST(InputRoot.XMLNSC.*:event.*:eventPointData.*:eventData.*:eventSourceAddress AS BLOB CCSID InputRoot.Properties.CodedCharSetId ENCODING InputRoot.Properties.Encoding);
+		DECLARE tempo BLOB CAST(InputRoot.XMLNSC.*:event.*:eventPointData.*:eventData.*:eventSequence.*:creationTime AS BLOB CCSID InputRoot.Properties.CodedCharSetId ENCODING InputRoot.Properties.Encoding);
+		DECLARE flow BLOB CAST(InputRoot.XMLNSC.*:event.*:applicationData.*:simpleContent.*:value AS BLOB CCSID InputRoot.Properties.CodedCharSetId ENCODING InputRoot.Properties.Encoding);
+		DECLARE BLOB_OUT BLOB X'';
+		DECLARE BREAK_LINE BLOB X'0D0A';
+		IF CONTAINS(InputRoot.XMLNSC.*:event.*:eventPointData.*:eventData.*:eventSourceAddress, 'Start') THEN
+			DECLARE HEADER BLOB CAST('------------------------------------------------' AS BLOB CCSID InputRoot.Properties.CodedCharSetId ENCODING InputRoot.Properties.Encoding);
+			SET BLOB_OUT = HEADER || BREAK_LINE || flow || BREAK_LINE || tempo || BREAK_LINE;
+		ELSE
+			SET BLOB_OUT = tempo || BREAK_LINE || flow || BREAK_LINE;
+		END IF;
+		
+		SET OutputRoot.BLOB.BLOB = BLOB_OUT;
 		
 		RETURN TRUE;
 	END;

@@ -8,16 +8,16 @@
     <colorGraphic16 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/PerformanceTest/icons/full/obj16/EventReader.gif"/>
     <colorGraphic32 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/PerformanceTest/icons/full/obj30/EventReader.gif"/>
     <composition>
-      <nodes xmi:type="ComIbmMQInput.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_1" location="39,201" queueName="TESTE_EVENTO" messageDomainProperty="XMLNSC">
-        <translation xmi:type="utility:ConstantString" string="MQ Input"/>
+      <nodes xmi:type="ComIbmMQInput.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_1" location="39,201" queueName="IIB_EVENTS" messageDomainProperty="XMLNSC">
+        <translation xmi:type="utility:ConstantString" string="ReadEvent"/>
       </nodes>
       <nodes xmi:type="ComIbmTrace.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_2" location="163,79" destination="file">
         <translation xmi:type="utility:ConstantString" string="Trace"/>
       </nodes>
-      <nodes xmi:type="ComIbmFileOutput.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_4" location="301,195" outputDirectory="C:\Kalb" outputFilename="SaidaEvento.txt" writeMode="writeInPlace" outputMode="append">
+      <nodes xmi:type="ComIbmFileOutput.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_4" location="293,206" outputDirectory="C:\Kalb" outputFilename="SaidaEvento.txt" writeMode="writeInPlace" outputMode="append">
         <translation xmi:type="utility:ConstantString" string="File Output"/>
       </nodes>
-      <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_5" location="149,214" computeExpression="esql://routine/#EventReader_TransformEvent.Main">
+      <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_5" location="149,201" computeExpression="esql://routine/#EventReader_TransformEvent.Main">
         <translation xmi:type="utility:ConstantString" string="TransformEvent"/>
       </nodes>
       <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_3" targetNode="FCMComposite_1_2" sourceNode="FCMComposite_1_1" sourceTerminalName="OutTerminal.failure" targetTerminalName="InTerminal.in"/>
